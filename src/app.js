@@ -13,6 +13,8 @@ db.authenticate()
 .then( () => {console.log("La base de datos se ha conectado de modo exitoso")})
 .catch( (err) => {console.log(err)} )
 
+
+
 app.listen(PORT, () => {
     console.log(`El servidor está escuchando en el puerto ${PORT}`)
 })
