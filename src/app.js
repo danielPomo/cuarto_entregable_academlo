@@ -6,6 +6,8 @@ const db = require('./utils/database')
 const initModels = require('./models/initModels')
 initModels()
 const chatTypesRoutes = require('./routes/chatTypes.routes')
+const usersRoutes = require('./routes/users.routes')
+const chatsRoutes = require('./routes/chats.routes')
 
 
 
@@ -15,8 +17,11 @@ db.sync()
 .then( () => console.log('Base de datos sincronizada') )
 .catch( (err) => console.log(err) )
 
+
 app.use(express.json())
 app.use(chatTypesRoutes)
+app.use(usersRoutes)
+app.use(chatsRoutes)
 
 
 

@@ -23,9 +23,6 @@ const Users = db.define(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [8, 10],
-      },
     },
     firstname: {
       type: DataTypes.STRING(30),
