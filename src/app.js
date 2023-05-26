@@ -9,9 +9,9 @@ app.get('/', (req, res) => {
     res.send('GET  a la raiz')
 })
 
-db.authenticate()
-.then( () => {console.log("La base de datos se ha conectado de modo exitoso")})
-.catch( (err) => {console.log(err)} )
+// db.authenticate()
+// .then( () => {console.log("La base de datos se ha conectado de modo exitoso")})
+// .catch( (err) => {console.log(err)} )
 
 
 
