@@ -1,23 +1,22 @@
 require('dotenv').config()
+const PORT = process.env.PORT || 8000
+
 const express = require('express')
-// const Users = require('./models/users.model.js')
-// const Messages = require('./models/messages.model.js')
-// const ChatTypes = require('./models/chatTypes.model.js')
-// const Chats = require('./models/chats.model.js')
 const db = require('./utils/database')
 const initModels = require('./models/initModels')
 initModels()
-const PORT = process.env.PORT || 8000
+const chatTypesRoutes = require('./routes/chatTypes.routes')
+
+
 
 const app = express()
-
-app.get('/', (req, res) => {
-    res.send('GET  a la raiz')
-})
 
 db.sync()
 .then( () => console.log('Base de datos sincronizada') )
 .catch( (err) => console.log(err) )
+
+app.use(express.json())
+app.use(chatTypesRoutes)
 
 
 
