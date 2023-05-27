@@ -1,4 +1,6 @@
 const Chats = require('../models/chats.model')
+const Users = require('../models/users.model')
+const Messages = require('../models/messages.model')
 const UsersChats = require('../models/usersChats.model') 
 
 const createChat = async ( req, res ) => {
@@ -34,4 +36,46 @@ const createGroupChat = async ( req, res ) => {
     }
 }
 
-module.exports = {createChat, createGroupChat}
+const getUsersAndMessagesByChatId = async ( req, res ) => {
+    try {
+        const {id} = req.params
+        const chatById = await Chats.findByPk(id, {
+            include: {
+                model: Messages,
+                include: {
+                    model: Users
+                }
+            }
+        }
+        )
+        res.json(chatById)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
+const deleteChat = async ( req, res ) => {
+    try {
+        const {chatId} = req.params
+        await Messages.destroy({
+            where: {
+                chatId
+            }
+        })
+        await UsersChats.destroy({
+            where: {
+                chatId
+            }
+        })
+        await Chats.destroy({
+            where: {
+                id: chatId
+            }
+        })
+        res.status(204).send()
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
+module.exports = {createChat, createGroupChat, getUsersAndMessagesByChatId, deleteChat}
