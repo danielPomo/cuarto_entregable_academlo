@@ -1,19 +1,10 @@
 const Users = require('../models/users.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { all } = require('../routes/chatTypes.routes')
 
 const createUser = async ( req, res ) => {
     try {
         const {username, email, password, firstname} = req.body
-
-        // if(typeof username !== 'string' || !username) {
-        //     return res.status(400).json({
-        //         error: 'Invalid username',
-        //         message: 'Username must be a string, and cannot be empty'
-        //     })
-        // }
-
         const hashed = await bcrypt.hash(password, 10)
         await Users.create({
             username, email, password: hashed, firstname
@@ -27,9 +18,6 @@ const createUser = async ( req, res ) => {
 const logUser = async ( req, res ) => {
     try {
         const {email, password} = req.body
-
-        // Validaciones que despues hago con express validator
-
         const user = await Users.findOne({
             where: {
                 email: email
