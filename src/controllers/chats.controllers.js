@@ -19,4 +19,19 @@ const createChat = async ( req, res ) => {
     }
 }
 
-module.exports = {createChat}
+const createGroupChat = async ( req, res ) => {
+    try {
+        const {title, chatTypeId, createdBy} = req.body
+        const newGroupChat = await Chats.create({
+            title, chatTypeId, createdBy
+        })
+        await UsersChats.create({
+            userId: createdBy, chatId: newGroupChat.id
+        })
+        res.status(201).send()
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
+module.exports = {createChat, createGroupChat}
