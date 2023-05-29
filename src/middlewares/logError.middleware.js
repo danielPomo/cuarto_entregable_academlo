@@ -1,6 +1,6 @@
 const logError = (error, req, res, next) => {
     console.log(error)
-    next()
+    next(error)
 }
 
 module.exports = logError

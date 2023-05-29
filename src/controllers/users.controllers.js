@@ -15,7 +15,7 @@ const createUser = async ( req, res ) => {
     }
 }
 
-const logUser = async ( req, res ) => {
+const logUser = async ( req, res, next ) => {
     try {
         const {email, password} = req.body
         const user = await Users.findOne({
@@ -25,17 +25,19 @@ const logUser = async ( req, res ) => {
         }) 
 
         if (!user) {
-            return res.status(400).json({
-                error: 'Invalid email.',
-                message: 'There is no user registered with this email.'
+            return next({
+                status: 400,
+                name: 'Invalid email',
+                message: 'This email does not exist'
             })
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password)
         if (!isValidPassword) {
-            return res.status(400).json({
-                error: 'Invalid password.',
-                message: 'The password is not correct.'
+            return next({
+                status: 400,
+                name: 'Invalid password',
+                message: 'The password does not match the user email'
             })
         }
 
