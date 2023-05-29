@@ -31,4 +31,20 @@ const createGroupChatValidator = [
     validateResult
 ]
 
-module.exports = {createChatValidator, createGroupChatValidator}
+const getUsersAndMessagesByChatIdValidator = [
+    check('id', 'Error en el campo id')
+        .exists().withMessage('Para crear un usuario se debe enviar obligatoriamente la propiedad id')
+        .notEmpty().withMessage('El campo id no debe estar vacío')
+        .isInt().withMessage('El tipo de dato del campo id debe ser un número entero'),
+    validateResult
+]
+
+const deleteChatValidator = [
+    check('chatId', 'Error en el campo chatId')
+        .exists().withMessage('Para crear un usuario se debe enviar obligatoriamente la propiedad chatId')
+        .notEmpty().withMessage('El campo chatId no debe estar vacío')
+        .isInt().withMessage('El tipo de dato del campo chatId debe ser un número entero'),
+    validateResult
+]
+
+module.exports = {createChatValidator, createGroupChatValidator, getUsersAndMessagesByChatIdValidator, deleteChatValidator}
