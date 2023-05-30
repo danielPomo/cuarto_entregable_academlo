@@ -1,6 +1,6 @@
 const Messages = require('../models/messages.model')
 
-const createANewMessage = async (req, res) => {
+const createANewMessage = async (req, res, next) => {
   try {
     const {chatId} = req.params
     const {content, createdBy} = req.body
@@ -9,7 +9,7 @@ const createANewMessage = async (req, res) => {
     })
     res.status(201).send()
   } catch (error) {
-    res.status(400).json(error)
+    next(error)
   }
 }
 

@@ -2,7 +2,7 @@ const Chats = require('../models/chats.model')
 const Users = require('../models/users.model')
 
 
-const getAllChatsByUserId = async ( req, res ) => {
+const getAllChatsByUserId = async ( req, res, next ) => {
     try {
         const {id} = req.params
         const chatsByUserId = await Users.findByPk(id, {
@@ -18,7 +18,7 @@ const getAllChatsByUserId = async ( req, res ) => {
         })
         res.json(chatsByUserId)
     } catch (error) {
-        res.status(400).json(error)
+        next(error)
     }
 }
 

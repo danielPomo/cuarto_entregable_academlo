@@ -1,6 +1,6 @@
 const ChatTypes = require('../models/chatTypes.model')
 
-const createChatType = async ( req, res ) => {
+const createChatType = async ( req, res, next ) => {
     try {
         const {chatType} = req.body
         await ChatTypes.create({
@@ -8,16 +8,16 @@ const createChatType = async ( req, res ) => {
         })
         res.status(201).send()
     } catch (error) {
-        res.status(400).json(error)
+        next(error)
     }
 }
 
-const getAllChatTypes = async ( req, res ) => {
+const getAllChatTypes = async ( req, res, next ) => {
     try {
         const chatTypes = await ChatTypes.findAll()
         res.json(chatTypes)
     } catch (error) {
-        res.status(400).json(error)
+        next(error)
     }
 }
 

@@ -74,7 +74,7 @@ const deleteChat = async ( req, res, next ) => {
         })
         res.status(204).send()
     } catch (error) {
-        rnext(error)
+        next(error)
     }
 }
 
