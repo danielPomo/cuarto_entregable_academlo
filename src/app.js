@@ -11,6 +11,7 @@ const chatsRoutes = require('./routes/chats.routes')
 const usersChatsRoutes = require('./routes/usersChats.routes')
 const messagesRoutes = require('./routes/messages.routes')
 const logError = require('./middlewares/logError.middleware')
+const ormErrorHandler = require('./middlewares/ormErrorHandler.middleware')
 const errorHandler = require('./middlewares/errorHandler.middleware')
 
 
@@ -29,7 +30,7 @@ app.use(chatsRoutes)
 app.use(usersChatsRoutes)
 app.use(messagesRoutes)
 
-app.use(logError, errorHandler)
+app.use(logError, ormErrorHandler, errorHandler)
 
 app.use('*', (req, res) => {
     res.status(404).json({

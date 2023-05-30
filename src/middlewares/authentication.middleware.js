@@ -4,19 +4,23 @@ const authenticate = ( req, res, next ) => {
     try {
         const retrievedToken = req.headers['access-token']
         if(!retrievedToken) {
-            return res.status(401).json({
-                error: 'No token retrieved',
-                message: 'The user may not be logged or token is not being provided'
+            return next({
+                status: 401,
+                name: 'No token retrieved',
+                message: "The access-token is not being provided in request's headers"
             })
         }
         const decodedToken = jwt.verify(retrievedToken, "HaveANiceDay", {
             algorithms: 'HS512'
         } )
         req.user = decodedToken
-        console.log(req.user)
         next()
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            status: 498,
+            name: 'Invalid or expired token',
+            message: error,
+        })
     }
 }
 

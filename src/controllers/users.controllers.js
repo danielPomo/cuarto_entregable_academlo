@@ -2,7 +2,7 @@ const Users = require('../models/users.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-const createUser = async ( req, res ) => {
+const createUser = async ( req, res, next ) => {
     try {
         const {username, email, password, firstname} = req.body
         const hashed = await bcrypt.hash(password, 10)
@@ -11,7 +11,7 @@ const createUser = async ( req, res ) => {
         })
         res.status(201).send()
     } catch (error) {
-        res.status(400).json(error)
+        next(error)
     }
 }
 
@@ -51,11 +51,11 @@ const logUser = async ( req, res, next ) => {
         userJustCreated.token = token
         res.json(userJustCreated)
     } catch (error) {
-        res.status(400).json(error)
+        next(error)
     }
 }
 
-const getAllUsers = async ( req, res ) => {
+const getAllUsers = async ( req, res, next ) => {
     try {
         const allUsers = await Users.findAll({
             attributes: {
@@ -64,7 +64,7 @@ const getAllUsers = async ( req, res ) => {
         })
         res.json(allUsers)
     } catch (error) {
-        res.status(400).json(error)
+        next(error)
     }
 } 
 
