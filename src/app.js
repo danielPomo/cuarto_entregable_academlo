@@ -8,8 +8,8 @@ initModels()
 const apiRoutes = require('./routes/index')
 const errorRoutes = require('./routes/errors.routes')
 
-app.use(cors())
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 apiRoutes(app)

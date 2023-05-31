@@ -14,6 +14,8 @@ const authenticate = ( req, res, next ) => {
             algorithms: 'HS512'
         } )
         req.user = decodedToken
+        console.log("Hola")
+        console.log(decodedToken)
         next()
     } catch (error) {
         next({
