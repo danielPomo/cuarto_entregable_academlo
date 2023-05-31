@@ -12,6 +12,11 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+db.sync()
+    .then( () => console.log("Base de datos sincronizada") )
+    .catch( (error) => console.log(error) )
+
+
 apiRoutes(app)
 
 errorRoutes(app)
